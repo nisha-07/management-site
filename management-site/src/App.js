@@ -5,14 +5,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Create from "../src/pages/create/Create"
 import Dashboard from "../src/pages/dashboard/Dashboard"
 import Login from "../src/pages/login/Login"
+import Navbar from './components/Navbar/Navbar';
 import Project from "../src/pages/project/Project"
 import Signup from "../src/pages/signup/Signup"
 
 function App() {
   return (
     <div className="App">
-      <h4 className='mt-3'>Welcome to my final project!</h4>
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />

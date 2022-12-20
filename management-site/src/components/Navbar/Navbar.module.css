@@ -1,0 +1,27 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding: 12px;
+    background: var(--primary-color);
+}
+
+a {
+    text-decoration: none !important;
+    font-family: Poppins, sans-serif;
+    font-size: large;
+    color: black !important;
+    margin: auto 8px;
+    text-align: center;
+}
+
+.links a:hover {
+    transform: scale(1.2);
+    border: 2px solid black;
+    padding: 4px;
+}
+
+.mainLogo:hover {
+    transform: scale(1.2);
+}
