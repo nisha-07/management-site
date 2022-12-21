@@ -5,4 +5,5 @@
 
 .Container {
   flex-grow: 2;
+  background-color: var(--bg-color);
 }
