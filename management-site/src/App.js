@@ -7,20 +7,24 @@ import Dashboard from "../src/pages/dashboard/Dashboard"
 import Login from "../src/pages/login/Login"
 import Navbar from './components/Navbar/Navbar';
 import Project from "../src/pages/project/Project"
+import Sidebar from './components/Sidebar/Sidebar';
 import Signup from "../src/pages/signup/Signup"
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/project/:id" element={<Project />} />
-        </Routes>
+        <Sidebar />
+        <div className="Container">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/create" element={<Create />} />
+            <Route path="/project/:id" element={<Project />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </div>
   );
