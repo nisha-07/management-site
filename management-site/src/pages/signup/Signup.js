@@ -1,6 +1,7 @@
+import { Audio } from "react-loader-spinner"
 import classes from "./Signup.module.css"
+import useSignup from "../../hooks/useSignup"
 import { useState } from "react"
-
 
 const Signup = () => {
     const [email, setEmail] = useState('')
@@ -9,10 +10,11 @@ const Signup = () => {
     const [thumbnail, setThumbnail] = useState(null)
     const [thumbnailError, setThumbnailError] = useState(null)
     const [condition, setCondition] = useState(null);
+    const { signup, isLoading, error } = useSignup();
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(email, password, displayName, thumbnail, thumbnailError)
+        signup(email, password, displayName, thumbnail)
     }
 
     const handleFileChange = (e) => {
@@ -75,7 +77,9 @@ const Signup = () => {
                 />
                 {thumbnailError && <em>{thumbnailError}</em>}
             </label>
-            <button className={classes.btn}>Sign up</button>
+            {!isLoading && <button className={classes.btn}>Sign up</button>}
+            {error && <em>{error}</em>}
+            {isLoading && <div className="d-flex justify-content-center"><Audio height="16px" width="16px" color="#8d69f1" /></div>}
         </form>
     )
 }
