@@ -8,7 +8,7 @@ const Navbar = () => {
 
     return (
         <div className={classes.navbar}>
-            <a href="/" className={classes.mainLogo}>
+            <a href="/dashboard" className={classes.mainLogo}>
                 <img src={homeIcon} alt="home-icon" className="ms-3" />
                 <span className="my-auto"> Management site</span>
             </a>

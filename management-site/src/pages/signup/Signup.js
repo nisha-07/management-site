@@ -17,7 +17,7 @@ const Signup = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         signup(email, password, displayName, thumbnail)
-        navigate("/")
+        navigate("/dashboard")
     }
 
     const handleFileChange = (e) => {

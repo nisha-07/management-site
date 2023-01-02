@@ -18,8 +18,8 @@ function App() {
         <div className="Container">
           <Navbar />
           <Routes>
-            <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/create" element={<Create />} />
             <Route path="/project/:id" element={<Project />} />

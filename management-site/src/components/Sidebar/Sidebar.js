@@ -12,7 +12,7 @@ const Sidebar = () => {
             <nav className={classes.links}>
                 <ul>
                     <li>
-                        <NavLink to="/">
+                        <NavLink to="/dashboard">
                             <img src={DashboardIcon} alt="dashboard icon" />
                             <span>Dashboard</span>
                         </NavLink>

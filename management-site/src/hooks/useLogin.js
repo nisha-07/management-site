@@ -1,13 +1,16 @@
+import { projectAuth, projectFirestore } from "../firebase/config"
 import { useEffect, useState } from "react"
 
-import { projectAuth } from "../firebase/config"
 import useAuthContext from "./useAuthContext"
+import { useNavigate } from "react-router-dom";
 
 export const useLogin = () => {
     const [isCancelled, setIsCancelled] = useState(false)
     const [error, setError] = useState(null)
+
     const [isLoading, setIsLoading] = useState(false)
     const { dispatch } = useAuthContext()
+    const navigate = useNavigate();
 
     const login = async (email, password) => {
         setError(null)
@@ -15,6 +18,7 @@ export const useLogin = () => {
 
         try {
             const res = await projectAuth.signInWithEmailAndPassword(email, password)
+            await projectFirestore.collection("users").doc(res.user.uid).update({ online: true })
 
             // dispatch login funtion
             dispatch({ type: "LOGIN", payload: res.user })
@@ -23,6 +27,7 @@ export const useLogin = () => {
                 setIsLoading(false)
                 setError(null)
             }
+            navigate("/dashboard")
         }
 
         catch (err) {
