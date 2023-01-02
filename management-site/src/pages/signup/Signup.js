@@ -1,5 +1,6 @@
 import { Audio } from "react-loader-spinner"
 import classes from "./Signup.module.css"
+import { useNavigate } from "react-router-dom";
 import useSignup from "../../hooks/useSignup"
 import { useState } from "react"
 
@@ -11,10 +12,12 @@ const Signup = () => {
     const [thumbnailError, setThumbnailError] = useState(null)
     const [condition, setCondition] = useState(null);
     const { signup, isLoading, error } = useSignup();
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault()
         signup(email, password, displayName, thumbnail)
+        navigate("/")
     }
 
     const handleFileChange = (e) => {

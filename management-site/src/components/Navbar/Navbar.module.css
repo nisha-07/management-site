@@ -24,3 +24,18 @@ a {
 .mainLogo:hover {
     transform: scale(1.2);
 }
+
+.btn {
+    background: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 18px;
+    border: 1px solid var(--primary-color);
+  }
+  
+  .btn:hover {
+    color: #fff;
+    background-color: var(--primary-color);
+  }
