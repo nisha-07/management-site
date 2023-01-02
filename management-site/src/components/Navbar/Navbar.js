@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import classes from "./Navbar.module.css";
 import homeIcon from "../../assets/home.svg";
+import useLogout from "../../hooks/useLogout";
 
 const Navbar = () => {
+    const { logout, isLoading } = useLogout()
+
     return (
         <div className={classes.navbar}>
             <a href="/" className={classes.mainLogo}>
@@ -12,7 +15,7 @@ const Navbar = () => {
             <div className={`my-auto me-5 ${classes.links}`}>
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Signup</Link>
-                <Link to="/">Logout</Link>
+                {!isLoading ? <button onClick={logout} className={classes.btn}>Logout</button> : <em>Logging out</em>}
             </div>
         </div>
     );
