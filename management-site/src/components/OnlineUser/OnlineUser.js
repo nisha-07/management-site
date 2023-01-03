@@ -12,6 +12,7 @@ const OnlineUser = () => {
                     <div key={doc?.id}>
                         <p>{doc?.displayName}</p>
                         <img src={doc?.photoURL} alt="avatar" />
+                        {doc?.online ? <div className={classes.activeDot}></div> : <div className={classes.dot} />}
                     </div>
                 )
             })}

@@ -13,3 +13,23 @@
 .users p{
     margin: auto 8px;
 }
+
+.activeDot {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    background: green;
+    left: -12px;
+    bottom: -12px;
+}
+
+.dot {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    background: red;
+    left: -12px;
+    bottom: -12px;
+}
