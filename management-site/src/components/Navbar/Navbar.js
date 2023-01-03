@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import classes from "./Navbar.module.css";
 import homeIcon from "../../assets/home.svg";
+import useAuthContext from "../../hooks/useAuthContext";
 import useLogout from "../../hooks/useLogout";
 
 const Navbar = () => {
+    const { user } = useAuthContext()
     const { logout, isLoading } = useLogout()
 
     return (
@@ -13,9 +15,12 @@ const Navbar = () => {
                 <span className="my-auto"> Management site</span>
             </a>
             <div className={`my-auto me-5 ${classes.links}`}>
-                <Link to="/login">Login</Link>
-                <Link to="/signup">Signup</Link>
-                {!isLoading ? <button onClick={logout} className={classes.btn}>Logout</button> : <em>Logging out</em>}
+                {!user ? (
+                    <>
+                        <Link to="/login">Login</Link>
+                        <Link to="/signup">Signup</Link>
+                    </>) :
+                    !isLoading ? <button onClick={logout} className={classes.btn}>Logout</button> : <em>Logging out</em>}
             </div>
         </div>
     );
