@@ -1,6 +1,8 @@
+import { useEffect, useMemo, useState } from "react"
+
 import SelectDropdown from "../../components/SelectDropdown/SelectDropdown"
 import classes from "./Create.module.css"
-import { useState } from "react"
+import { useCollection } from "../../hooks/useCollection"
 
 const Create = () => {
     const [name, setName] = useState("")
@@ -9,15 +11,34 @@ const Create = () => {
     const [category, setCategory] = useState("")
     const [assignedUsers, setAssignedUsers] = useState([])
 
+    const users = useMemo(() => [], [])
+
     const options = [
-        { value: "Design", label: "Design" },
-        { value: "Development", label: "Development" }
+        { value: "design", label: "Design" },
+        { value: "development", label: "Development" },
+        { value: "sales", label: "Sales" },
+        { value: "marketing", label: "Marketing" },
     ]
+
+    const { documents } = useCollection("users")
+
+    useEffect(() => {
+        documents && documents.map((doc) => users.push({ "value": doc?.id, "label": doc?.displayName }))
+    }, [users])
 
     // handle event onclick of add project button
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(name, details, date, category, "Project details")
+        console.log(name, details, date, category, assignedUsers, "Project details")
+    }
+
+    const clearAllFields = () => {
+        setName("")
+        setDetails("")
+        setDate("")
+        /**
+         *ToDo: clear category and assign users
+         */
     }
 
     return (
@@ -53,13 +74,26 @@ const Create = () => {
                 </label>
                 <label>
                     <span>Project category:</span>
-                    <SelectDropdown options={options} placeholder="Select a category" onChange={(op) => setCategory(op.value)} />
+                    <SelectDropdown
+                        options={options}
+                        placeholder="Select a category"
+                        onChange={(op) => setCategory(op.value)}
+                    />
                 </label>
                 <label>
                     <span>Assign to:</span>
+                    <SelectDropdown
+                        options={users}
+                        placeholder="Select users"
+                        onChange={(op) => setAssignedUsers(op)}
+                        isMulti={true}
+                    />
                 </label>
                 <button type="submit" className={classes.btn}>
                     Add Project
+                </button>
+                <button className={classes.btn} onClick={clearAllFields}>
+                    Clear All
                 </button>
             </form>
         </div>
