@@ -1,3 +1,4 @@
+import SelectDropdown from "../../components/SelectDropdown/SelectDropdown"
 import classes from "./Create.module.css"
 import { useState } from "react"
 
@@ -8,10 +9,15 @@ const Create = () => {
     const [category, setCategory] = useState("")
     const [assignedUsers, setAssignedUsers] = useState([])
 
+    const options = [
+        { value: "Design", label: "Design" },
+        { value: "Development", label: "Development" }
+    ]
+
     // handle event onclick of add project button
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(name, details, date, "Project details")
+        console.log(name, details, date, category, "Project details")
     }
 
     return (
@@ -47,6 +53,7 @@ const Create = () => {
                 </label>
                 <label>
                     <span>Project category:</span>
+                    <SelectDropdown options={options} placeholder="Select a category" onChange={(op) => setCategory(op.value)} />
                 </label>
                 <label>
                     <span>Assign to:</span>
