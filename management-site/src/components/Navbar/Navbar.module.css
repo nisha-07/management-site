@@ -39,3 +39,8 @@ a {
     color: #fff;
     background-color: var(--primary-color);
   }
+
+.mainLogo img {
+    height: 30px;
+    width: 30px;
+}

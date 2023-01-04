@@ -58,7 +58,7 @@ ul {
 
 /* forms */
 label {
-  display: block;
+  display: block !important;
   margin: 24px auto;
 }
 
@@ -79,7 +79,7 @@ textarea {
 }
 
 textarea {
-  min-height: 160px;
+  min-height: 42px;
 }
 
 .error {
