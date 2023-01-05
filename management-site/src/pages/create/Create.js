@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react"
 
 import SelectDropdown from "../../components/SelectDropdown/SelectDropdown"
 import classes from "./Create.module.css"
+import useAuthContext from "../../hooks/useAuthContext"
 import { useCollection } from "../../hooks/useCollection"
 
 const Create = () => {
@@ -10,6 +11,8 @@ const Create = () => {
     const [date, setDate] = useState("")
     const [category, setCategory] = useState("")
     const [assignedUsers, setAssignedUsers] = useState([])
+    const [formError, setFormError] = useState(null)
+
 
     const users = useMemo(() => [], [])
 
@@ -21,15 +24,55 @@ const Create = () => {
     ]
 
     const { documents } = useCollection("users")
+    const { user } = useAuthContext()
 
     useEffect(() => {
-        documents && documents.map((doc) => users.push({ "value": doc?.id, "label": doc?.displayName }))
+        documents && documents.map((doc) => users.push({ "value": { ...doc, id: doc?.id }, "label": user?.displayName }))
     }, [users])
 
     // handle event onclick of add project button
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(name, details, date, category, assignedUsers, "Project details")
+        setFormError(null)
+
+        if (!category) {
+            setFormError('Please select a project category.')
+            return
+        }
+        if (assignedUsers.length < 1) {
+            setFormError('Please assign the project to at least 1 user')
+            return
+        }
+
+        const assignedUsersList = assignedUsers.map(u => {
+            return {
+                displayName: u.value.displayName,
+                photoURL: u.value.photoURL,
+                id: u.value.id
+            }
+        })
+        const createdBy = {
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+            id: user.uid
+        }
+
+        const project = {
+            name,
+            details,
+            category: category,
+            /** 
+            *ToDo: Check the date and its formate
+            */
+            date: date,
+            assignedUsersList,
+            createdBy,
+            comments: []
+        }
+
+        console.log(project)
+
+
     }
 
     const clearAllFields = () => {
@@ -38,6 +81,7 @@ const Create = () => {
         setDate("")
         /**
          *ToDo: clear category and assign users
+         *ToDO: user details in assignuserlist object
          */
     }
 
@@ -95,6 +139,7 @@ const Create = () => {
                 <button className={classes.btn} onClick={clearAllFields}>
                     Clear All
                 </button>
+                {formError && <p className="error">{formError}</p>}
             </form>
         </div>
     )
