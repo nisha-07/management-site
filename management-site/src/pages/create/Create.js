@@ -4,6 +4,8 @@ import SelectDropdown from "../../components/SelectDropdown/SelectDropdown"
 import classes from "./Create.module.css"
 import useAuthContext from "../../hooks/useAuthContext"
 import { useCollection } from "../../hooks/useCollection"
+import useFirestore from "../../hooks/useFirestore"
+import { useNavigate } from "react-router-dom"
 
 const Create = () => {
     const [name, setName] = useState("")
@@ -12,6 +14,7 @@ const Create = () => {
     const [category, setCategory] = useState("")
     const [assignedUsers, setAssignedUsers] = useState([])
     const [formError, setFormError] = useState(null)
+    const navigate = useNavigate()
 
 
     const users = useMemo(() => [], [])
@@ -25,13 +28,14 @@ const Create = () => {
 
     const { documents } = useCollection("users")
     const { user } = useAuthContext()
+    const { addDocument } = useFirestore("projects")
 
     useEffect(() => {
         documents && documents.map((doc) => users.push({ "value": { ...doc, id: doc?.id }, "label": user?.displayName }))
     }, [users])
 
     // handle event onclick of add project button
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setFormError(null)
 
@@ -39,10 +43,10 @@ const Create = () => {
             setFormError('Please select a project category.')
             return
         }
-        if (assignedUsers.length < 1) {
-            setFormError('Please assign the project to at least 1 user')
-            return
-        }
+        // if (assignedUsers.length < 1) {
+        //     setFormError('Please assign the project to at least 1 user')
+        //     return
+        // }
 
         const assignedUsersList = assignedUsers.map(u => {
             return {
@@ -69,6 +73,9 @@ const Create = () => {
             createdBy,
             comments: []
         }
+        await addDocument(project)
+
+        navigate("/")
 
         console.log(project)
 
